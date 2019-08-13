@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+</head>
+<body>
+<form id="dowmform">
+    <input type="checkbox" name="cols" value="id">书籍编号
+    <input type="checkbox" name="cols" value="name">书籍名称
+    <input type="checkbox" name="cols" value="price">书籍价格
+    <input type="checkbox" name="cols" value="typeid">书籍作者
+    <input type="checkbox" name="cols" value="time">出版日期
+    <a href="javascript:exportExcel()">导出Excel</a>
+</form>
+<form action="./importExcel" method="post" enctype="multipart/form-data" >
+    <input type="file" name="file"/>
+    <input type="submit" value="导入excel"/>
+</form>
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>price</td>
+        <td>typeid</td>
+        <td>time</td>
+    </tr>
+    <tr th:each="book:${list}">
+        <td th:text="${book.id}">id</td>
+        <td th:text="${book.name}">name</td>
+        <td th:text="${book.price}">price</td>
+        <td th:text="${book.typeid}">typeid</td>
+        <td th:text="${book.time}">time</td>
+    </tr>
+</table>
+<script>
+   function exportExcel() {
+       location.href="../exportExcel";
+   }
+
+
+
+    
+</script>
+</body>
+</html>

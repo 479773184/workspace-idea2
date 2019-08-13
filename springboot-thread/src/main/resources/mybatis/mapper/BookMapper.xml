@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.BookDao" >
+  
+  
+   <select id="query" resultType="com.jk.model.Book">
+      select * from t_book
+   </select>
+
+    <insert id="addBook" parameterType="java.util.List">
+        insert into t_book(name,price,typeid,time) values
+        <foreach collection="list" item="l"  separator=","  >
+            (#{l.name},#{l.price},#{l.typeid},#{l.time})
+        </foreach>
+    </insert>
+
+ 
+</mapper>

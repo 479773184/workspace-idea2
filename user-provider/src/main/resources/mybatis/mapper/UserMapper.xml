@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.UserMapper">
+
+<select id="getTreeAll" resultType="com.jk.model.PermissionModel" parameterType="int">
+   SELECT  tp.* FROM t_user tu , user_role ur ,t_role tr ,role_permission rp ,t_permission tp
+WHERE  tu.id= ur.user_id
+AND    ur.role_id = tr.id
+AND    tr.id= rp.role_id
+AND    rp.permission_id = tp.id
+AND tu.id= #{id}  GROUP BY tp.name
+</select>
+<select id="queryPermission" resultType="com.jk.model.PermissionModel">
+    SELECT * FROM t_permission
+</select>
+<select id="queryRole" resultType="com.jk.model.RoleModel">
+    SELECT * FROM t_role
+</select>
+<select id="queryUser" resultType="com.jk.model.UserModel">
+    SELECT * FROM t_user
+</select>
+<select id="getPermissionByRId"  parameterType="int" resultType="java.lang.String">
+    SELECT permission_id FROM  role_permission where role_id = #{roleId}
+</select>
+<select id="getPermissionAll" resultType="com.jk.model.PermissionModel">
+    select * from t_permission
+</select>
+<delete id="deleteRolePermissByRid" parameterType="int" >
+    delete from role_permission where role_id = #{roleId}
+</delete>
+<insert id="insert" parameterType="com.jk.model.RolePermissModel" >
+  insert into role_permission (id, permission_id, role_id
+   )
+  values (#{id}, #{permissionId}, #{roleId}
+   )
+</insert>
+<select id="getRoleByUserId" parameterType="int" resultType="java.lang.Integer">
+    SELECT role_id FROM user_role where user_id = #{userId}
+</select>
+<delete id="deleteRoleById" parameterType="int" >
+    delete from user_role where user_id = #{uidTwo}
+</delete>
+<insert id="insert2" parameterType="com.jk.model.UserRoleModel" >
+    insert into user_role (id, user_id, role_id
+      )
+    values (#{id}, #{userId}, #{roleId}
+      )
+</insert>
+<select id="loginUser" parameterType="com.jk.model.UserModel" resultType="com.jk.model.UserModel">
+    select * from t_user where username = #{username} AND  userpass= #{userpass}
+</select>
+<select id="queryUser2" resultType="com.jk.model.UserModel" >
+    select * from t_user
+</select>
+    <insert id="addUser" parameterType="java.util.List">
+        insert into t_user(username,userpass) values
+        <foreach collection="list" item="l"  separator=","  >
+            (#{l.username},#{l.userpass})
+        </foreach>
+    </insert>
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.BookMapper">
+    <resultMap id="BaseResultMap" type="com.jk.model.Book">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="typeid" property="typeid" jdbcType="INTEGER"/>
+        <result column="time" property="time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <select id="queryBook" resultMap="BaseResultMap">
+        select * from t_book
+
+    </select>
+    <delete id="delBookById" parameterType="int">
+        delete from t_book where id in(
+        <foreach collection="array" index="index" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </delete>
+    <insert id="saveBtn" parameterType="com.jk.model.Book">
+        insert into t_book(name,price,typeid,time) values(#{name},#{price},#{typeid},now())
+    </insert>
+    <select id="findById" parameterType="int" resultType="com.jk.model.Book">
+        select * from t_book where id=#{value}
+    </select>
+    <update id="editBtn" parameterType="com.jk.model.Book">
+        update t_book set name=#{name},price=#{price},typeid=#{typeid} where id=#{id}
+    </update>
+</mapper>

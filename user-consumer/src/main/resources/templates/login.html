@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-1.8.0.js"></script>
+    <link rel="stylesheet"  href="../js/easyui-1.7.0/themes/default/easyui.css">
+    <link rel="stylesheet"  href="../js/easyui-1.7.0/themes/icon.css">
+    <link rel="stylesheet" href="../js/easyui-1.7.0/demo.css">
+    <script type="text/javascript" src="../js/easyui-1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/easyui-1.7.0/plugins/jquery.datagrid.js"></script>
+</head>
+<body>
+<div class="easyui-dialog" data-options="title:'登录',modal:true,buttons:[
+     {
+         text:'登录',
+         iconCls:'icon-man',
+         handler:function(){
+            loginUser();
+         }
+
+      }]" style="width: 300px;height: 250px">
+    <form id="formId" method="post">
+        <table>
+            <tr>
+                <td>账号</td>
+                <td><input type="text" class="easyui-textbox" name="username"></td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td><input type="text" class="easyui-passwordbox" name="userpass"></td>
+            </tr>
+           <!--  <tr>
+            <td>验证码</td>
+            <td><input type="text" class="easyui-textbox" name="imgCode" size="5">
+                <img id="checkCode" onclick="changeCode()" src="../verificationCode">
+            </td>
+        </tr> -->
+        </table>
+    </form>
+</div>
+</body>
+<script type="text/javascript">
+    /*  function changeCode(){
+            $("#checkCode").attr('src','../verificationCode?t='+new Date().getTime());
+        } */
+    function loginUser(){
+        $("#formId").form('submit',{
+            url:"../user/loginUser",
+            type:'post',
+            success:function(data){
+                data=JSON.parse(data);
+                //登录成功
+                if(data=='1'){
+                    location.href="../user/toshow";
+                }else if(data=='0'){
+                    $.messager.alert('提示',"登录失败！！！",'error');
+                }
+            },error:function(data){
+                alert("失败");
+            }
+        })
+    }
+</script>
+</html>

@@ -55,6 +55,7 @@ public class BookController {
         List<Map<String,Object>> list1=new ArrayList<>();
         for (Map<String,Object> map1:list) {
             System.err.println(11111);
+            System.err.println(222);
             Map<String,Object> map=new HashMap<>();
             Integer  object = Integer.parseInt(map1.get("年").toString()) ;
             if(object==2017){
